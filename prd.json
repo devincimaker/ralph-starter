@@ -1,0 +1,320 @@
+{
+  "branchName": "todo-app/feature",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize Node.js backend with Express",
+      "acceptanceCriteria": [
+        "Express server runs on configurable port",
+        "CORS enabled for frontend",
+        "JSON body parsing middleware configured"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Set up SQLite database with users and tasks tables",
+      "acceptanceCriteria": [
+        "Users table with id, email, password_hash, created_at",
+        "Tasks table with id, user_id, title, description, is_completed, created_at",
+        "Foreign key relationship between tasks and users"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "User registration endpoint",
+      "acceptanceCriteria": [
+        "POST /api/auth/register accepts email and password",
+        "Validates email format",
+        "Validates password minimum length (8 chars)",
+        "Returns error if email already exists",
+        "Hashes password before storing",
+        "Returns success message on registration"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "User login endpoint",
+      "acceptanceCriteria": [
+        "POST /api/auth/login accepts email and password",
+        "Validates credentials against database",
+        "Creates session on successful login",
+        "Returns user info (without password) on success",
+        "Returns 401 on invalid credentials"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Session middleware for protected routes",
+      "acceptanceCriteria": [
+        "Middleware checks for valid session",
+        "Attaches user info to request object",
+        "Returns 401 if no valid session"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "User logout endpoint",
+      "acceptanceCriteria": [
+        "POST /api/auth/logout destroys session",
+        "Returns success message"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Initialize React frontend with Tailwind CSS",
+      "acceptanceCriteria": [
+        "React app created with Vite",
+        "Tailwind CSS configured and working",
+        "Basic folder structure (components, pages, api)"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Set up React Router for navigation",
+      "acceptanceCriteria": [
+        "Routes for /login, /register, and / (home/tasks)",
+        "Navigation works between pages"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Registration form UI",
+      "acceptanceCriteria": [
+        "Email input field",
+        "Password input field",
+        "Confirm password field",
+        "Submit button",
+        "Client-side validation with error messages",
+        "Calls registration API on submit",
+        "Redirects to login on success",
+        "Shows error message on failure"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Login form UI",
+      "acceptanceCriteria": [
+        "Email input field",
+        "Password input field",
+        "Submit button",
+        "Link to registration page",
+        "Calls login API on submit",
+        "Redirects to tasks page on success",
+        "Shows error message on invalid credentials"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Protected routes redirect unauthenticated users",
+      "acceptanceCriteria": [
+        "Tasks page redirects to login if not authenticated",
+        "Auth state persists on page refresh",
+        "Login/register pages redirect to tasks if already authenticated"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Create task endpoint",
+      "acceptanceCriteria": [
+        "POST /api/tasks accepts title and description",
+        "Requires authentication",
+        "Validates title is not empty",
+        "Creates task linked to authenticated user",
+        "Returns created task with id"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Get all tasks endpoint",
+      "acceptanceCriteria": [
+        "GET /api/tasks returns all tasks for authenticated user",
+        "Requires authentication",
+        "Only returns tasks belonging to the user",
+        "Returns tasks ordered by created_at descending"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Update task endpoint",
+      "acceptanceCriteria": [
+        "PUT /api/tasks/:id updates title and/or description",
+        "Requires authentication",
+        "Only allows updating own tasks",
+        "Returns 404 if task not found",
+        "Returns updated task"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Delete task endpoint",
+      "acceptanceCriteria": [
+        "DELETE /api/tasks/:id removes task",
+        "Requires authentication",
+        "Only allows deleting own tasks",
+        "Returns 404 if task not found",
+        "Returns success message"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Toggle task completion endpoint",
+      "acceptanceCriteria": [
+        "PATCH /api/tasks/:id/toggle toggles is_completed",
+        "Requires authentication",
+        "Only allows toggling own tasks",
+        "Returns updated task"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Task list display",
+      "acceptanceCriteria": [
+        "Shows all user tasks on tasks page",
+        "Each task shows title and description",
+        "Completed tasks shown with strikethrough",
+        "Empty state message when no tasks"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Create task form",
+      "acceptanceCriteria": [
+        "Title input field (required)",
+        "Description textarea (optional)",
+        "Submit button",
+        "Clears form on successful creation",
+        "New task appears in list immediately"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Edit task functionality",
+      "acceptanceCriteria": [
+        "Edit button on each task",
+        "Opens edit form with current values",
+        "Save and cancel buttons",
+        "Updates task in list on save"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Delete task functionality",
+      "acceptanceCriteria": [
+        "Delete button on each task",
+        "Confirmation before deleting",
+        "Removes task from list immediately"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Toggle task completion in UI",
+      "acceptanceCriteria": [
+        "Checkbox or click to toggle completion",
+        "Strikethrough applied/removed immediately",
+        "Calls toggle API endpoint"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Filter tasks by completion status",
+      "acceptanceCriteria": [
+        "Filter options: All, Active, Completed",
+        "Default shows All tasks",
+        "Filter updates list immediately",
+        "Filter state shown in UI"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Mobile responsive layout",
+      "acceptanceCriteria": [
+        "Layout adapts to mobile screens",
+        "Forms usable on mobile",
+        "Task list readable on small screens",
+        "Touch-friendly button sizes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Logout functionality in UI",
+      "acceptanceCriteria": [
+        "Logout button visible when authenticated",
+        "Calls logout API endpoint",
+        "Redirects to login page",
+        "Clears local auth state"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

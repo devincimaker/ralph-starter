@@ -1,0 +1,69 @@
+# Ralph Progress Log
+Started: 2026-01-06
+
+## Codebase Patterns
+
+- **Express App Structure**: Separate app configuration (`app.js`) from server startup (`index.js`) for testability
+- **Testing**: Use Node.js built-in test runner (`node:test`) with `.test.js` suffix, start server in `before()` hook
+- **Configuration**: Use environment variables with sensible defaults (PORT=3000, FRONTEND_URL=http://localhost:5173, DB_PATH)
+- **Backend Location**: `backend/` directory at project root
+- **Database**: Use `better-sqlite3` for synchronous SQLite operations; use `:memory:` for tests via `process.env.DB_PATH`
+
+## Key Files
+
+- `backend/src/app.js` - Express app configuration
+- `backend/src/index.js` - Server entry point
+- `backend/src/db.js` - Database module (SQLite)
+- `backend/src/*.test.js` - Test files
+
+---
+
+## 2026-01-07 - US-001
+
+- What was implemented:
+  - Express server with configurable PORT environment variable (default 3000)
+  - CORS middleware configured for frontend (FRONTEND_URL env var, default localhost:5173)
+  - JSON body parsing middleware (express.json())
+  - Health check endpoint at /health
+  - Test suite using Node.js built-in test runner
+
+- Files changed:
+  - `backend/package.json` - Project configuration with scripts
+  - `backend/src/app.js` - Express app setup with middleware
+  - `backend/src/index.js` - Server entry point
+  - `backend/src/app.test.js` - Tests for all acceptance criteria
+  - `backend/AGENTS.md` - Agent instructions for backend
+  - `backend/.gitignore` - Excludes node_modules
+
+- **Learnings:**
+  - Always add .gitignore BEFORE first commit to avoid committing node_modules
+  - Separate app configuration from server startup for better testability
+  - Node.js built-in test runner (`node:test`) is sufficient for simple tests
+
+---
+
+## 2026-01-07 - US-002
+
+- What was implemented:
+  - SQLite database using better-sqlite3 package
+  - Users table with id (INTEGER PK), email (TEXT UNIQUE NOT NULL), password_hash (TEXT NOT NULL), created_at (TEXT DEFAULT datetime)
+  - Tasks table with id (INTEGER PK), user_id (INTEGER FK NOT NULL), title (TEXT NOT NULL), description (TEXT), is_completed (INTEGER DEFAULT 0), created_at (TEXT DEFAULT datetime)
+  - Foreign key from tasks.user_id to users.id with ON DELETE CASCADE
+  - Database module exports: getDb(), initDb(), closeDb(), resetDb()
+  - Comprehensive test suite verifying all columns, constraints, and relationships
+
+- Files changed:
+  - `backend/package.json` - Added better-sqlite3 dependency
+  - `backend/src/db.js` - Database initialization module
+  - `backend/src/db.test.js` - Tests for database schema
+  - `backend/AGENTS.md` - Added database patterns
+  - `backend/.gitignore` - Added data/ directory
+
+- **Learnings:**
+  - Use `PRAGMA foreign_keys = ON` to enable foreign key enforcement in SQLite
+  - Use `PRAGMA journal_mode = WAL` for better concurrent read/write performance
+  - Store dates as TEXT with SQLite datetime() function for default values
+  - Use `:memory:` for in-memory test databases via environment variable
+  - better-sqlite3 is synchronous which simplifies code but blocks the event loop
+
+---
